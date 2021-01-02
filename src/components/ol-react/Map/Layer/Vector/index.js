@@ -5,13 +5,14 @@ import { MapContext } from "../../../Context";
 
 function Vector({ source, style, fit }) {
   const mapContext = useContext(MapContext);
-  const layer = useRef(null);
-
-  useEffect(() => {
-    layer.current = new VectorLayer({
+  const layer = useRef(
+    new VectorLayer({
       source,
       style,
-    });
+    })
+  );
+
+  useEffect(() => {
     mapContext.map.current.addLayer(layer.current);
 
     return function cleanup() {

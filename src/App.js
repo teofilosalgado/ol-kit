@@ -228,9 +228,6 @@ function App() {
             <Map.Interaction.Modify
               source={drawTalhaoSource}
             ></Map.Interaction.Modify>
-            <Map.Interaction.Snap
-              source={drawTalhaoSource}
-            ></Map.Interaction.Snap>
           </>
         )}
         {currentDrawing === 1 && (
@@ -242,9 +239,6 @@ function App() {
             <Map.Interaction.Modify
               source={drawPragaSource}
             ></Map.Interaction.Modify>
-            <Map.Interaction.Snap
-              source={drawPragaSource}
-            ></Map.Interaction.Snap>
           </>
         )}
         {currentDrawing === 2 && (
@@ -256,9 +250,6 @@ function App() {
             <Map.Interaction.Modify
               source={drawAnotacaoSource}
             ></Map.Interaction.Modify>
-            <Map.Interaction.Snap
-              source={drawAnotacaoSource}
-            ></Map.Interaction.Snap>
           </>
         )}
         {currentDrawing === 3 && (

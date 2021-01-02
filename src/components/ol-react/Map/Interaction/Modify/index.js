@@ -4,12 +4,13 @@ import { MapContext } from "../../../Context";
 
 function Modify({ source }) {
   const mapContext = useContext(MapContext);
-  const interaction = useRef(null);
+  const interaction = useRef(
+    new ModifyInteraction({
+      source,
+    })
+  );
 
   useEffect(() => {
-    interaction.current = new ModifyInteraction({
-      source,
-    });
     mapContext.map.current.addInteraction(interaction.current);
 
     return function cleanup() {

@@ -4,13 +4,14 @@ import { MapContext } from "../../../Context";
 
 function Draw({ source, type }) {
   const mapContext = useContext(MapContext);
-  const interaction = useRef(null);
-
-  useEffect(() => {
-    interaction.current = new DrawInteraction({
+  const interaction = useRef(
+    new DrawInteraction({
       source,
       type,
-    });
+    })
+  );
+
+  useEffect(() => {
     mapContext.map.current.addInteraction(interaction.current);
 
     return function cleanup() {

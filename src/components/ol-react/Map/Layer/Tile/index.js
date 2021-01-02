@@ -5,20 +5,17 @@ import { MapContext } from "../../../Context";
 
 function Tile({ source }) {
   const mapContext = useContext(MapContext);
-  const currentSource = useRef(null);
-  const layer = useRef(null);
+  const layer = useRef(
+    new TileLayer({
+      source,
+    })
+  );
 
   useEffect(() => {
-    if (
-      currentSource.current === null ||
-      currentSource.current.ol_uid !== source.ol_uid
-    ) {
-      currentSource.current = source;
-      layer.current = new TileLayer({
-        source,
-      });
-      mapContext.map.current.addLayer(layer.current);
-    }
+    mapContext.map.current.addLayer(layer.current);
+    return function cleanup() {
+      mapContext.map.current.removeLayer(layer.current);
+    };
   });
   return null;
 }

@@ -4,12 +4,13 @@ import { MapContext } from "../../../Context";
 
 function Snap({ source }) {
   const mapContext = useContext(MapContext);
-  const interaction = useRef(null);
+  const interaction = useRef(
+    new SnapInteraction({
+      source,
+    })
+  );
 
   useEffect(() => {
-    interaction.current = new SnapInteraction({
-      source,
-    });
     mapContext.map.current.addInteraction(interaction.current);
 
     return function cleanup() {

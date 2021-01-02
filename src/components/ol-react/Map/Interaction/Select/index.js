@@ -4,10 +4,9 @@ import { MapContext } from "../../../Context";
 
 function Select({ onSelected, filter }) {
   const mapContext = useContext(MapContext);
-  const interaction = useRef(null);
+  const interaction = useRef(new SelectInteraction({ filter }));
 
   useEffect(() => {
-    interaction.current = new SelectInteraction({ filter });
     interaction.current.on("select", onSelected);
     mapContext.map.current.addInteraction(interaction.current);
 

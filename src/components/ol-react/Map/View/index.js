@@ -5,14 +5,16 @@ import { MapContext } from "../../Context";
 
 function View({ options }) {
   const context = useContext(MapContext);
-  const view = useRef(null);
+  const view = useRef(new OpenLayersView(options));
 
   useEffect(() => {
-    if (view.current === null) {
-      view.current = new OpenLayersView(options);
-      context.map.current.setTarget("map");
-      context.map.current.setView(view.current);
-    }
+    context.map.current.setTarget("map");
+    context.map.current.setView(view.current);
+
+    return function cleanup() {
+      context.map.current.setTarget(undefined);
+      context.map.current.setView(undefined);
+    };
   });
   return null;
 }
