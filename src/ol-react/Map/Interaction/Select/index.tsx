@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef } from "react";
 import { MapContext } from "../../../Context";
 
 type Props = {
-  onSelected: (event: SelectEvent) => void;
+  onSelected?: (event: SelectEvent) => void;
 };
 
 function Select({ onSelected }: Props) {
@@ -12,7 +12,9 @@ function Select({ onSelected }: Props) {
   const interaction = useRef(new SelectInteraction({}));
 
   useEffect(() => {
-    interaction.current.on("select", onSelected);
+    if (onSelected) {
+      interaction.current.on("select", onSelected);
+    }
     mapContext.map?.current.addInteraction(interaction.current);
 
     return function cleanup() {

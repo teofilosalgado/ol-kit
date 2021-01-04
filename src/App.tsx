@@ -15,6 +15,7 @@ import anotacao from "./anemometer_mono.png";
 import IconAnchorUnits from "ol/style/IconAnchorUnits";
 import GeometryType from "ol/geom/GeometryType";
 import { SelectEvent } from "ol/interaction/Select";
+import { DrawEvent } from "ol/interaction/Draw";
 
 const ARCGIS_WORLD_IMAGERY_URL =
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
@@ -154,6 +155,14 @@ function App() {
     });
   }
 
+  function onDrawPragaEnd(event: DrawEvent) {
+    console.log("praga", event);
+  }
+
+  function onDrawAnotacaoEnd(event: DrawEvent) {
+    console.log("anotacao", event);
+  }
+
   return (
     <div>
       <Map height={"100vh"} width={"100vw"}>
@@ -238,6 +247,7 @@ function App() {
             <Map.Interaction.Draw
               source={drawPragaSource}
               type={GeometryType.POINT}
+              onDrawEnd={onDrawPragaEnd}
             ></Map.Interaction.Draw>
             <Map.Interaction.Modify
               source={drawPragaSource}
@@ -249,6 +259,7 @@ function App() {
             <Map.Interaction.Draw
               source={drawAnotacaoSource}
               type={GeometryType.POINT}
+              onDrawEnd={onDrawAnotacaoEnd}
             ></Map.Interaction.Draw>
             <Map.Interaction.Modify
               source={drawAnotacaoSource}
