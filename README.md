@@ -13,18 +13,18 @@ npm install --save ol-react
 ## Usage
 
 ```tsx
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import MyComponent from 'ol-react'
-import 'ol-react/dist/index.css'
+import MyComponent from 'ol-react';
+import 'ol-react/dist/index.css';
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <MyComponent />;
   }
 }
 ```
 
 ## License
 
-MIT © [teofilosalgado](https://github.com/teofilosalgado)
+GNU GPL v3 © [teofilosalgado](https://github.com/teofilosalgado)
