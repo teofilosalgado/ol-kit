@@ -7,22 +7,7 @@
 ## Install
 
 ```bash
-npm install --save ol-react
-```
-
-## Usage
-
-```tsx
-import React, { Component } from 'react';
-
-import MyComponent from 'ol-react';
-import 'ol-react/dist/index.css';
-
-class Example extends Component {
-  render() {
-    return <MyComponent />;
-  }
-}
+yarn add ol-react
 ```
 
 ## License

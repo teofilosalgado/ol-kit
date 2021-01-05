@@ -1,6 +1,6 @@
 {
   "name": "ol-react",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A React wrapper around modern OpenLayers.",
   "author": "teofilosalgado",
   "license": "GPL-3.0-or-later",
