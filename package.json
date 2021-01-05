@@ -5,6 +5,13 @@
   "author": "teofilosalgado",
   "license": "GPL-3.0-or-later",
   "repository": "teofilosalgado/ol-react",
+  "keywords": [
+    "map",
+    "react",
+    "openlayers",
+    "ol",
+    "wrapper"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.ts",
