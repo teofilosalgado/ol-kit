@@ -10,6 +10,10 @@
 yarn add ol-react
 ```
 
+## Documentation
+
+Documentation can be found [here](https://github.com/teofilosalgado/ol-react/tree/master/docs).
+
 ## License
 
 GNU GPL v3 © [teofilosalgado](https://github.com/teofilosalgado)
