@@ -1,6 +1,6 @@
 {
   "name": "ol-kit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A React wrapper around modern OpenLayers.",
   "author": "teofilosalgado",
   "license": "GPL-3.0-or-later",
