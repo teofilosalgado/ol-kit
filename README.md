@@ -19,6 +19,9 @@ Let's create a simple map!
 import { Map } from "ol-kit";
 import "ol-kit/dist/index.css";
 
+// Import required OpenLayers types
+import { XYZ as XYZSource } from "ol/source";
+
 // Viewport options, according to https://openlayers.org/en/latest/apidoc/module-ol_View.html#~ViewOptions
 const options = {
   projection: "EPSG:4326",
