@@ -10,9 +10,46 @@
 yarn add ol-kit
 ```
 
-## Documentation
+## Getting Started
 
-Documentation can be found [here](https://github.com/teofilosalgado/ol-kit/tree/master/docs).
+Let's create a simple map!
+
+```jsx
+// Importing the library
+import { Map } from "ol-kit";
+import "ol-kit/dist/index.css";
+
+// Viewport options, according to https://openlayers.org/en/latest/apidoc/module-ol_View.html#~ViewOptions
+const options = {
+  projection: "EPSG:4326",
+  center: [-43.990062, -19.873536],
+  zoom: 6,
+  minZoom: 5,
+  maxZoom: 16
+};
+
+// Let's create a source for our basemap, in this case, Esri's World Imagery
+const esriWorldImagerySource = new XYZSource({
+  url:
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+});
+
+// Defining the map:
+function App() {
+  return (
+    <Map height={"700px"} width={"100%"}>
+      <Map.View options={options}></Map.View>
+
+      {/* Add a layer using your recently created source */}
+      <Map.Layer.Tile source={esriWorldImagerySource}></Map.Layer.Tile>
+    </Map>
+  );
+}
+
+export default App;
+```
+
+And... _voilà_, your map is up and running!
 
 ## License
 
