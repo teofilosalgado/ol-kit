@@ -2,7 +2,7 @@ import { Feature } from "ol";
 import WFS from "ol/format/WFS";
 import Geometry from "ol/geom/Geometry";
 
-export default async function updateFeatures(
+export default async function update(
   url: string,
   namespace: string,
   type: string,

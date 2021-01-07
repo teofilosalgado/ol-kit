@@ -1,9 +1,7 @@
-import get from "./get";
-import insert from "./insert";
+import functions from "./functions";
 
 const WFS = {
-  get,
-  insert
+  ...functions
 };
 
 export default WFS;
