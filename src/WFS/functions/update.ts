@@ -31,5 +31,5 @@ export default async function update(
   const xml = await response.text();
 
   const result = formatWFS.readTransactionResponse(xml);
-  return result?.totalUpdated;
+  return (result as any).transactionSummary.totalUpdated;
 }
