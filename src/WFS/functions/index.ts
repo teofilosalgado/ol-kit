@@ -1,6 +1,13 @@
-import get from "./get";
-import insert from "./insert";
-import update from "./update";
-import upsert from "./upsert";
+import getFeatures from "./get";
+import insertFeatures from "./insert";
+import updateFeatures from "./update";
+import upsertFeatures from "./upsert";
+import deleteFeatures from "./delete";
 
-export default { get, insert, update, upsert };
+export default {
+  getFeatures,
+  insertFeatures,
+  updateFeatures,
+  upsertFeatures,
+  deleteFeatures
+};
