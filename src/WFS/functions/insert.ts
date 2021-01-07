@@ -8,7 +8,7 @@ export default async function insert(
   type: string,
   features: Feature<Geometry>[],
   srsName?: string
-) {
+): Promise<number[] | undefined> {
   if (features.length <= 0) {
     return [];
   }

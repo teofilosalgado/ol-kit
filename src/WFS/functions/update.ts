@@ -8,9 +8,9 @@ export default async function update(
   type: string,
   features: Feature<Geometry>[],
   srsName?: string
-) {
+): Promise<number | undefined> {
   if (features.length <= 0) {
-    return [];
+    return 0;
   }
   const formatWFS = new WFS();
 

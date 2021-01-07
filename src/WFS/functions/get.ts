@@ -1,13 +1,15 @@
 import GML from "ol/format/GML3";
 import WFS from "ol/format/WFS";
 import Filter from "ol/format/filter/Filter";
+import { Feature } from "ol";
+import Geometry from "ol/geom/Geometry";
 
 export default async function getFeatures(
   url: string,
   namespace: string,
   types: string[],
   filter: Filter
-) {
+): Promise<Feature<Geometry>[]> {
   const getRequest = new WFS().writeGetFeature({
     featureNS: namespace,
     featurePrefix: namespace,
