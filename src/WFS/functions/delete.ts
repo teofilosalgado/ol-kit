@@ -31,5 +31,9 @@ export default async function deleteFeatures(
   const xml = await response.text();
 
   const result = formatWFS.readTransactionResponse(xml);
-  return (result as any).transactionSummary.totalDeleted;
+  if (result && (result as any).transactionSummary) {
+    return (result as any).transactionSummary.totalDeleted;
+  } else {
+    return 0;
+  }
 }

@@ -3,15 +3,23 @@ import Geometry from "ol/geom/Geometry";
 import insert from "./insert";
 import update from "./update";
 
+type UpsertFeaturesResponse = {
+  totalUpdated: number;
+  insertIds: number[];
+};
+
 export default async function upsertFeatures(
   url: string,
   namespace: string,
   type: string,
   features: Feature<Geometry>[],
   srsName?: string
-) {
+): Promise<UpsertFeaturesResponse> {
   if (features.length <= 0) {
-    return [];
+    return {
+      totalUpdated: 0,
+      insertIds: []
+    };
   }
 
   const featuresToUpdate = features.filter((feature) => feature.getId());

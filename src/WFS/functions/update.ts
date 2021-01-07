@@ -8,7 +8,7 @@ export default async function updateFeatures(
   type: string,
   features: Feature<Geometry>[],
   srsName?: string
-): Promise<number | undefined> {
+): Promise<number> {
   if (features.length <= 0) {
     return 0;
   }
@@ -31,5 +31,9 @@ export default async function updateFeatures(
   const xml = await response.text();
 
   const result = formatWFS.readTransactionResponse(xml);
-  return (result as any).transactionSummary.totalUpdated;
+  if (result && (result as any).transactionSummary) {
+    return (result as any).transactionSummary.totalUpdated;
+  } else {
+    return 0;
+  }
 }

@@ -8,7 +8,7 @@ export default async function insertFeatures(
   type: string,
   features: Feature<Geometry>[],
   srsName?: string
-): Promise<number[] | undefined> {
+): Promise<number[]> {
   if (features.length <= 0) {
     return [];
   }
@@ -31,8 +31,12 @@ export default async function insertFeatures(
   const xml = await response.text();
 
   const result = formatWFS.readTransactionResponse(xml);
-  const insertIds = result?.insertIds.map((item) =>
-    parseInt(item.replace(`${type}.`, ""))
-  );
-  return insertIds;
+  if (result && result.insertIds) {
+    const insertIds = result.insertIds.map((item) =>
+      parseInt(item.replace(`${type}.`, ""))
+    );
+    return insertIds;
+  } else {
+    return [];
+  }
 }
