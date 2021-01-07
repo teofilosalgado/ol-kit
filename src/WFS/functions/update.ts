@@ -14,7 +14,7 @@ export default async function update(
   }
   const formatWFS = new WFS();
 
-  const updateRequest = formatWFS.writeTransaction(features, [], [], {
+  const updateRequest = formatWFS.writeTransaction([], features, [], {
     featureNS: namespace,
     featurePrefix: namespace,
     featureType: type,
