@@ -3,7 +3,7 @@ import Geometry from "ol/geom/Geometry";
 import insert from "./insert";
 import update from "./update";
 
-export default async function upsert(
+export default async function upsertFeatures(
   url: string,
   namespace: string,
   type: string,

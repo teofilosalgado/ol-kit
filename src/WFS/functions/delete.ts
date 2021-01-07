@@ -2,7 +2,7 @@ import { Feature } from "ol";
 import WFS from "ol/format/WFS";
 import Geometry from "ol/geom/Geometry";
 
-export default async function updateFeatures(
+export default async function deleteFeatures(
   url: string,
   namespace: string,
   type: string,
@@ -14,7 +14,7 @@ export default async function updateFeatures(
   }
   const formatWFS = new WFS();
 
-  const updateRequest = formatWFS.writeTransaction([], features, [], {
+  const updateRequest = formatWFS.writeTransaction([], [], features, {
     featureNS: namespace,
     featurePrefix: namespace,
     featureType: type,
@@ -31,5 +31,5 @@ export default async function updateFeatures(
   const xml = await response.text();
 
   const result = formatWFS.readTransactionResponse(xml);
-  return (result as any).transactionSummary.totalUpdated;
+  return (result as any).transactionSummary.totalDeleted;
 }
