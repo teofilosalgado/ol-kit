@@ -21,17 +21,25 @@ export default async function upsert(
     const id = await insert(url, namespace, type, [feature], srsName);
     if (id) {
       feature.setId(id[0]);
+      return id[0];
+    } else {
+      return NaN;
     }
-    return id;
   }
   const insertFeatureAndUpdateIdPromises = featuresToInsert.map(
     insertFeatureAndUpdateId
   );
-  const insertedIds = Promise.all(insertFeatureAndUpdateIdPromises);
+  const insertIds = await Promise.all(insertFeatureAndUpdateIdPromises);
+  const totalUpdated = await update(
+    url,
+    namespace,
+    type,
+    featuresToUpdate,
+    srsName
+  );
 
-  const totalUpdated = update(url, namespace, type, featuresToUpdate, srsName);
   return {
-    insertedIds,
-    totalUpdated
+    totalUpdated,
+    insertIds
   };
 }
