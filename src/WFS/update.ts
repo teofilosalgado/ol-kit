@@ -2,7 +2,7 @@ import { Feature } from "ol";
 import WFS from "ol/format/WFS";
 import Geometry from "ol/geom/Geometry";
 
-export default async function insertFeatures(
+export default async function updateFeatures(
   url: string,
   namespace: string,
   type: string,
@@ -14,14 +14,14 @@ export default async function insertFeatures(
   }
   const formatWFS = new WFS();
 
-  const insertRequest = formatWFS.writeTransaction(features, [], [], {
+  const updateRequest = formatWFS.writeTransaction(features, [], [], {
     featureNS: namespace,
     featurePrefix: namespace,
     featureType: type,
     nativeElements: [],
     srsName
   });
-  const payload = new XMLSerializer().serializeToString(insertRequest);
+  const payload = new XMLSerializer().serializeToString(updateRequest);
 
   const response = await fetch(url, {
     method: "POST",
@@ -31,8 +31,5 @@ export default async function insertFeatures(
   const xml = await response.text();
 
   const result = formatWFS.readTransactionResponse(xml);
-  const insertIds = result?.insertIds.map((item) =>
-    parseInt(item.replace(`${type}.`, ""))
-  );
-  return insertIds;
+  return result?.totalUpdated;
 }
