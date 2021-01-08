@@ -19,6 +19,7 @@
     "node": ">=10"
   },
   "scripts": {
+    "deploy": "yarn docz build",
     "build": "microbundle-crl --css-modules true --no-compress --format modern,cjs",
     "start": "microbundle-crl watch --css-modules true --no-compress --format modern,cjs",
     "prepare": "run-s build",
@@ -26,9 +27,7 @@
     "test:build": "run-s build",
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
-    "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build"
+    "test:watch": "react-scripts test --env=jsdom"
   },
   "peerDependencies": {
     "ol": ">=6.0.0",
@@ -47,6 +46,7 @@
     "@typescript-eslint/parser": "^2.26.0",
     "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.2",
+    "docz": "^2.3.1",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.7.0",
     "eslint-config-standard": "^14.1.0",
