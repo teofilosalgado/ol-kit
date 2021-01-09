@@ -1,6 +1,8 @@
 # ol-kit
 
-> A React map component based in modern OpenLayers, designed to be fully integrated with React's lifecycle.
+## What is it?
+
+ol-kit is a React map component based in modern OpenLayers, designed to be fully integrated with React's lifecycle. ol-kit also includes utilities like buttons, toolbars and WFS-T functions.
 
 [![NPM](https://img.shields.io/npm/v/ol-kit.svg)](https://www.npmjs.com/package/ol-kit) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
