@@ -1,0 +1,24 @@
+import { Meta, Story, Props, Canvas } from "@storybook/addon-docs/blocks";
+import { Map } from "../../../index";
+
+<Meta title="Examples/Map/A blank map" component={Map} />
+
+# A blank map
+
+In this example we will create a blank map, just with the basic controls in screen:
+
+```tsx
+import { Map } from "ol-kit";
+import "ol-kit/dist/index.css";
+
+// Defining the map:
+function App() {
+  return <Map height={"300px"} width={"100%"}></Map>;
+}
+```
+
+<Canvas>
+  <Story name="A blank map">
+    <Map height={"300px"} width={"100%"}></Map>
+  </Story>
+</Canvas>

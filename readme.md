@@ -1,6 +1,6 @@
 # ol-kit
 
-> A React wrapper around modern OpenLayers.
+> A React map component based in modern OpenLayers, designed to be fully integrated with React's lifecycle.
 
 [![NPM](https://img.shields.io/npm/v/ol-kit.svg)](https://www.npmjs.com/package/ol-kit) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -53,6 +53,15 @@ export default App;
 ```
 
 And... _voilà_, your map is up and running!
+
+## Examples & documentation
+
+You can find even more examples and help in our interactive documentation [here](https://teofilosalgado.github.io/ol-kit).
+
+## Requirements
+
+- `react >= 16.8.0`
+- `ol >= 6.0.0`
 
 ## License
 

@@ -1,0 +1,66 @@
+import { Meta, Story, Props, Canvas } from "@storybook/addon-docs/blocks";
+import { Map } from "../../../index";
+import { XYZ as XYZSource } from "ol/source";
+
+export const options = {
+  projection: "EPSG:4326",
+  center: [-43.990062, -19.873536],
+  zoom: 6,
+  minZoom: 5,
+  maxZoom: 16
+};
+
+export const esriWorldImagerySource = new XYZSource({
+  url:
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+});
+
+<Meta title="Examples/Map/Adding a basemap layer" component={Map} />
+
+# Adding a basemap layer
+
+Now we will add a `View` and a `Tile` basemap `Layer` to the map:
+
+```tsx
+import { Map } from "ol-kit";
+import "ol-kit/dist/index.css";
+
+// Import required OpenLayers types
+import { XYZ as XYZSource } from "ol/source";
+
+// Viewport options, according to https://openlayers.org/en/latest/apidoc/module-ol_View.html#~ViewOptions
+const options = {
+  projection: "EPSG:4326",
+  center: [-43.990062, -19.873536],
+  zoom: 6,
+  minZoom: 5,
+  maxZoom: 16
+};
+
+// Let's create a source for our basemap, in this case, Esri's World Imagery
+const esriWorldImagerySource = new XYZSource({
+  url:
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+});
+
+// Defining the map:
+function App() {
+  return (
+    <Map height={"300px"} width={"100%"}>
+      <Map.View options={options}></Map.View>
+      <Map.Layer.Tile source={esriWorldImagerySource}></Map.Layer.Tile>
+    </Map>
+  );
+}
+```
+
+> ## Tip
+>
+> You can create a constant file with all your sources and option to optimize your React components rendering. They don't need to be inside React's lifecycle anyway.
+
+<Story name="Adding a basemap layer">
+  <Map height={"300px"} width={"100%"}>
+    <Map.View options={options} />
+    <Map.Layer.Tile source={esriWorldImagerySource} />
+  </Map>
+</Story>
