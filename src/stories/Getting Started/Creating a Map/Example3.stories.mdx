@@ -1,12 +1,12 @@
 import { Meta, Story, Props, Canvas } from "@storybook/addon-docs/blocks";
-import { XYZ as XYZSource } from "ol/source";
+import { XYZ as XYZSource, TileWMS as TileWMSSource } from "ol/source";
 import { Map } from "../../../../dist/index";
 import "../../../../dist/index.css";
 
 export const options = {
   projection: "EPSG:4326",
   center: [-43.990062, -19.873536],
-  zoom: 6,
+  zoom: 5,
   minZoom: 5,
   maxZoom: 16
 };
@@ -16,18 +16,23 @@ export const esriWorldImagerySource = new XYZSource({
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
 });
 
-<Meta title="Examples/Map/Adding a basemap layer" />
+export const WMSSource = new TileWMSSource({
+  url: "https://geoservicos.ibge.gov.br/geoserver/CCAR/wms",
+  params: { LAYERS: "BC250_2019_Unidade_Federacao_A", TILED: true }
+});
 
-# Adding a basemap layer
+<Meta title="Getting Started/Creating a Map/Working with WMS sources" />
 
-Now we will add a `View` and a `Tile` basemap `Layer` to the map:
+# Working with WMS sources
+
+Here we will add a `TileWMS` source to the map from the previous example:
 
 ```tsx
 import { Map } from "ol-kit";
 import "ol-kit/dist/index.css";
 
 // Import required OpenLayers types
-import { XYZ as XYZSource } from "ol/source";
+import { XYZ as XYZSource, TileWMS as TileWMSSource } from "ol/source";
 
 // Viewport options, according to https://openlayers.org/en/latest/apidoc/module-ol_View.html#~ViewOptions
 const options = {
@@ -44,24 +49,28 @@ const esriWorldImagerySource = new XYZSource({
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
 });
 
+// Here we define our WMS source
+const WMSSource = new TileWMSSource({
+  url: "http://159.65.216.107:8088/geoserver/agro/wms",
+  params: { LAYERS: "agro:estado", TILED: true }
+});
+
 // Defining the map:
 function App() {
   return (
     <Map height={"300px"} width={"100%"}>
-      <Map.View options={options} />
+      <Map.View options={options}></Map.View>
       <Map.Layer.Tile source={esriWorldImagerySource} />
+      <Map.Layer.Tile source={WMSSource} />
     </Map>
   );
 }
 ```
 
-> ## Tip
->
-> You can create a constant file with all your sources and options to optimize your React components rendering. They don't need to be inside React's lifecycle anyway. It will also improve your overrall performance.
-
 <Story name="Adding a basemap layer">
   <Map height={"300px"} width={"100%"}>
     <Map.View options={options} />
     <Map.Layer.Tile source={esriWorldImagerySource} />
+    <Map.Layer.Tile source={WMSSource} />
   </Map>
 </Story>
