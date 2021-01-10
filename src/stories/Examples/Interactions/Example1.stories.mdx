@@ -1,0 +1,129 @@
+import { Meta, Story, Props, Canvas } from "@storybook/addon-docs/blocks";
+import { useState } from "react";
+import { XYZ as XYZSource, Vector as VectorSource } from "ol/source";
+import { Fill as FillStyle, Stroke as StrokeStyle, Style } from "ol/style";
+import { Map } from "../../../../dist/index";
+import "../../../../dist/index.css";
+
+export const options = {
+  projection: "EPSG:4326",
+  center: [-43.990062, -19.873536],
+  zoom: 6,
+  minZoom: 5,
+  maxZoom: 16
+};
+
+export const esriWorldImagerySource = new XYZSource({
+  url:
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+});
+
+export const drawSource = new VectorSource();
+
+export const drawStyle = new Style({
+  fill: new FillStyle({
+    color: "rgba(51, 136, 255, 0.2)"
+  }),
+  stroke: new StrokeStyle({
+    color: "#3388ff",
+    width: 2
+  })
+});
+
+<Meta title="Examples/Interactions/Drawing features" />
+
+# Drawing features
+
+In this example, we will add `Interactions` to the map from previous examples. Allowing us to draw various shapes on top of the map, using the aforementioned concept of `Vector` sources:
+
+```tsx
+import { Map } from "ol-kit";
+import "ol-kit/dist/index.css";
+
+// Import required OpenLayers types
+import { XYZ as XYZSource, Vector as VectorSource } from "ol/source";
+import { Fill as FillStyle, Stroke as StrokeStyle, Style } from "ol/style";
+
+// Viewport options, according to https://openlayers.org/en/latest/apidoc/module-ol_View.html#~ViewOptions
+const options = {
+  projection: "EPSG:4326",
+  center: [-43.990062, -19.873536],
+  zoom: 6,
+  minZoom: 5,
+  maxZoom: 16
+};
+
+// Let's create a source for our basemap, in this case, Esri's World Imagery
+const esriWorldImagerySource = new XYZSource({
+  url:
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+});
+
+// Here we define our vector source. This will behave like a "canvas" for our drawings
+const drawSource = new VectorSource();
+
+// And here is the style definition for the draw layer
+const drawStyle = new Style({
+  fill: new FillStyle({
+    color: "rgba(51, 136, 255, 0.2)"
+  }),
+  stroke: new StrokeStyle({
+    color: "#3388ff",
+    width: 2
+  })
+});
+
+// Defining the map:
+function App() {
+  // A hook to store button state
+  const [buttonState, setButtonState] = useState(false);
+
+  return (
+    <Map height={"300px"} width={"100%"}>
+      <Map.View options={options} />
+      <Map.Layer.Tile source={esriWorldImagerySource} />
+      <Map.Layer.Vector source={drawTalhaoSource} style={drawStyle} />
+      {/* The interaction is controlled by the React lifecycle! */}
+      {buttonState ? (
+        <Map.Interaction.Draw source={drawSource} type={"Polygon"} />
+      ) : null}
+      <Map.Toolbar>
+        <Map.Toolbar.Button
+          active={buttonState}
+          onClick={() => setButtonState(!buttonState)}
+          tooltip={"Toggle me to start/stop drawing!"}
+          icon={"✏️"}
+        ></Map.Toolbar.Button>
+      </Map.Toolbar>
+    </Map>
+  );
+}
+```
+
+export const Content = () => {
+  const [buttonState, setButtonState] = useState(false);
+  return (
+    <Map height={"300px"} width={"100%"}>
+      <Map.View options={options} />
+      <Map.Layer.Tile source={esriWorldImagerySource} />
+      <Map.Layer.Vector source={drawSource} style={drawStyle} />
+      {buttonState ? (
+        <Map.Interaction.Draw source={drawSource} type={"Polygon"} />
+      ) : null}
+      <Map.Toolbar>
+        <Map.Toolbar.Button
+          active={buttonState}
+          onClick={() => setButtonState(!buttonState)}
+          tooltip={"Toggle me to start/stop drawing!"}
+          icon={"✏️"}
+        ></Map.Toolbar.Button>
+      </Map.Toolbar>
+    </Map>
+  );
+};
+
+Click in the `✏️` button and start drawing!
+
+<Story name="Adding a basemap layer">
+  <Content />
+</Story>

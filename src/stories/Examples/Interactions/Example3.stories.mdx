@@ -1,0 +1,191 @@
+import { Meta, Story, Props, Canvas } from "@storybook/addon-docs/blocks";
+import { useState } from "react";
+import { XYZ as XYZSource, Vector as VectorSource } from "ol/source";
+import { Fill, Stroke, Style } from "ol/style";
+import Circle from "ol/geom/Circle";
+import Feature from "ol/Feature";
+import { Map } from "../../../../dist/index";
+import "../../../../dist/index.css";
+
+export const options = {
+  projection: "EPSG:4326",
+  center: [-43.990062, -19.873536],
+  zoom: 6,
+  minZoom: 5,
+  maxZoom: 16
+};
+
+export const esriWorldImagerySource = new XYZSource({
+  url:
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+});
+
+export const vectorSource = new VectorSource({
+  features: [
+    new Feature({
+      geometry: new Circle([-43.990062, -19.873536], 1.0),
+      name: "second circle"
+    }),
+    new Feature({
+      geometry: new Circle([-40.990062, -19.873536], 1.0),
+      name: "first circle"
+    }),
+    new Feature({
+      geometry: new Circle([-46.990062, -19.873536], 1.0),
+      name: "third circle"
+    })
+  ]
+});
+
+export const circleStyle = new Style({
+  stroke: new Stroke({
+    color: "red",
+    width: 2
+  }),
+  fill: new Fill({
+    color: "rgba(255,0,0,0.2)"
+  })
+});
+
+<Meta title="Examples/Interactions/Selecting features" />
+
+# Selecting features
+
+In this example, we will add selection interaction to our map:
+
+```tsx
+import { Map } from "ol-kit";
+import "ol-kit/dist/index.css";
+
+// Import required OpenLayers types
+import { XYZ as XYZSource, Vector as VectorSource } from "ol/source";
+import { Fill as FillStyle, Stroke as StrokeStyle, Style } from "ol/style";
+
+// Viewport options, according to https://openlayers.org/en/latest/apidoc/module-ol_View.html#~ViewOptions
+const options = {
+  projection: "EPSG:4326",
+  center: [-43.990062, -19.873536],
+  zoom: 6,
+  minZoom: 5,
+  maxZoom: 16
+};
+
+// Let's create a source for our basemap, in this case, Esri's World Imagery
+const esriWorldImagerySource = new XYZSource({
+  url:
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+});
+
+// Define 3 circles in the screen and give them names
+const vectorSource = new VectorSource({
+  features: [
+    new Feature({
+      geometry: new Circle([-43.990062, -19.873536], 1.0),
+      name: "second circle"
+    }),
+    new Feature({
+      geometry: new Circle([-40.990062, -19.873536], 1.0),
+      name: "first circle"
+    }),
+    new Feature({
+      geometry: new Circle([-46.990062, -19.873536], 1.0),
+      name: "third circle"
+    })
+  ]
+});
+
+export const circleStyle = new Style({
+  stroke: new Stroke({
+    color: "red",
+    width: 2
+  }),
+  fill: new Fill({
+    color: "rgba(255,0,0,0.2)"
+  })
+});
+
+// Defining the map:
+function App() {
+  // A hook to store button state
+  const [buttonState, setButtonState] = useState(false);
+
+  // Another hook to store current clicked circle
+  const [currentClickedCircle, setCurrentClickedCircle] = useState("");
+
+  // Select interaction callback function
+  const onSelected = (event) => {
+    setCurrentClickedCircle(event.selected[0].get("name"));
+  };
+
+  return (
+    <>
+      <Map height={"300px"} width={"100%"}>
+        <Map.View options={options} />
+        <Map.Layer.Tile source={esriWorldImagerySource} />
+        <Map.Layer.Vector source={vectorSource} style={circleStyle} />
+        {buttonState ? (
+          <Map.Interaction.Select
+            source={vectorSource}
+            onSelected={onSelected}
+          />
+        ) : null}
+        <Map.Toolbar>
+          <Map.Toolbar.Button
+            active={buttonState}
+            onClick={() => setButtonState(!buttonState)}
+            tooltip={"Toggle me to start/stop selecting!"}
+            icon={"👆"}
+          ></Map.Toolbar.Button>
+        </Map.Toolbar>
+      </Map>
+      <h2 style={{ color: "#ffffff" }}>
+        {currentClickedCircle
+          ? `You've clicked the ${currentClickedCircle}.`
+          : "Please, select a circle."}
+      </h2>
+    </>
+  );
+}
+```
+
+export const Content = () => {
+  const [buttonState, setButtonState] = useState(false);
+  const [currentClickedCircle, setCurrentClickedCircle] = useState("");
+  const onSelected = (event) => {
+    setCurrentClickedCircle(event.selected[0].get("name"));
+  };
+  return (
+    <>
+      <Map height={"300px"} width={"100%"}>
+        <Map.View options={options} />
+        <Map.Layer.Tile source={esriWorldImagerySource} />
+        <Map.Layer.Vector source={vectorSource} style={circleStyle} />
+        {buttonState ? (
+          <Map.Interaction.Select
+            source={vectorSource}
+            onSelected={onSelected}
+          />
+        ) : null}
+        <Map.Toolbar>
+          <Map.Toolbar.Button
+            active={buttonState}
+            onClick={() => setButtonState(!buttonState)}
+            tooltip={"Toggle me to start/stop selecting!"}
+            icon={"👆"}
+          ></Map.Toolbar.Button>
+        </Map.Toolbar>
+      </Map>
+      <h2 style={{ color: "#ffffff" }}>
+        {currentClickedCircle
+          ? `You've clicked the ${currentClickedCircle}.`
+          : "Please, select a circle."}
+      </h2>
+    </>
+  );
+};
+
+Click in the `👆` to select between features!
+
+<Story name="Adding a basemap layer">
+  <Content />
+</Story>

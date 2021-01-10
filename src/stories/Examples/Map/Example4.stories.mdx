@@ -1,5 +1,12 @@
 import { Meta, Story, Props, Canvas } from "@storybook/addon-docs/blocks";
-import { XYZ as XYZSource, TileWMS as TileWMSSource } from "ol/source";
+import { Fill, Stroke, Style } from "ol/style";
+import Circle from "ol/geom/Circle";
+import Feature from "ol/Feature";
+import {
+  XYZ as XYZSource,
+  TileWMS as TileWMSSource,
+  Vector as VectorSource
+} from "ol/source";
 import { Map } from "../../../../dist/index";
 import "../../../../dist/index.css";
 
@@ -21,18 +28,39 @@ export const WMSSource = new TileWMSSource({
   params: { LAYERS: "BC250_2019_Unidade_Federacao_A", TILED: true }
 });
 
-<Meta title="Examples/Map/Working with WMS sources" />
+export const vectorSource = new VectorSource({
+  features: [new Feature(new Circle([-43.990062, -19.873536], 5.0))]
+});
 
-# Working with WMS sources
+export const circleStyle = new Style({
+  stroke: new Stroke({
+    color: "red",
+    width: 2
+  }),
+  fill: new Fill({
+    color: "rgba(255,0,0,0.2)"
+  })
+});
 
-Here we will add a `TileWMS` source to the map from the previous example:
+<Meta title="Examples/Map/Creating vectors" />
+
+# Creating vectors
+
+Now we will create some vectors on top of the map created in the previous examples:
 
 ```tsx
 import { Map } from "ol-kit";
 import "ol-kit/dist/index.css";
 
 // Import required OpenLayers types
-import { XYZ as XYZSource, TileWMS as TileWMSSource } from "ol/source";
+import {
+  XYZ as XYZSource,
+  TileWMS as TileWMSSource,
+  Vector as VectorSource
+} from "ol/source";
+import { Fill, Stroke, Style } from "ol/style";
+import Circle from "ol/geom/Circle";
+import Feature from "ol/Feature";
 
 // Viewport options, according to https://openlayers.org/en/latest/apidoc/module-ol_View.html#~ViewOptions
 const options = {
@@ -51,8 +79,24 @@ const esriWorldImagerySource = new XYZSource({
 
 // Here we define our WMS source
 const WMSSource = new TileWMSSource({
-  url: "http://159.65.216.107:8088/geoserver/agro/wms",
-  params: { LAYERS: "agro:estado", TILED: true }
+  url: "https://geoservicos.ibge.gov.br/geoserver/CCAR/wms",
+  params: { LAYERS: "BC250_2019_Unidade_Federacao_A", TILED: true }
+});
+
+// Vectors need to styled
+const circleStyle = new Style({
+  stroke: new Stroke({
+    color: "red",
+    width: 2
+  }),
+  fill: new Fill({
+    color: "rgba(255,0,0,0.2)"
+  })
+});
+
+// And finally, our vector source
+const vectorSource = new VectorSource({
+  features: [new Feature(new Circle([-43.990062, -19.873536], 5.0))]
 });
 
 // Defining the map:
@@ -62,15 +106,21 @@ function App() {
       <Map.View options={options}></Map.View>
       <Map.Layer.Tile source={esriWorldImagerySource} />
       <Map.Layer.Tile source={WMSSource} />
+      <Map.Layer.Vector source={vectorSource} style={circleStyle} />
     </Map>
   );
 }
 ```
+
+> ## Tip
+>
+> Just like sources, styles can stay outside of the React component or in a constants file for better perfomance.
 
 <Story name="Adding a basemap layer">
   <Map height={"300px"} width={"100%"}>
     <Map.View options={options} />
     <Map.Layer.Tile source={esriWorldImagerySource} />
     <Map.Layer.Tile source={WMSSource} />
+    <Map.Layer.Vector source={vectorSource} style={circleStyle} />
   </Map>
 </Story>

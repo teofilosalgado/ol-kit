@@ -1,7 +1,8 @@
 import { Meta, Story, Props, Canvas } from "@storybook/addon-docs/blocks";
-import { Map } from "../../../index";
+import { Map } from "../../../../dist/index";
+import "../../../../dist/index.css";
 
-<Meta title="Examples/Map/A blank map" component={Map} />
+<Meta title="Examples/Map/A blank map" />
 
 # A blank map
 
@@ -17,8 +18,8 @@ function App() {
 }
 ```
 
-<Canvas>
-  <Story name="A blank map">
-    <Map height={"300px"} width={"100%"}></Map>
-  </Story>
-</Canvas>
+<Story name="A blank map">
+  <Map height={"300px"} width={"100%"}></Map>
+</Story>
+
+Boring isn't it? In the next example we will spice things up with some layers!

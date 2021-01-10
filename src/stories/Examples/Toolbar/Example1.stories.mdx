@@ -1,4 +1,5 @@
 import { Meta, Story, Props, Canvas } from "@storybook/addon-docs/blocks";
+import { useState } from "react";
 import { XYZ as XYZSource, TileWMS as TileWMSSource } from "ol/source";
 import { Map } from "../../../../dist/index";
 import "../../../../dist/index.css";
@@ -21,18 +22,18 @@ export const WMSSource = new TileWMSSource({
   params: { LAYERS: "BC250_2019_Unidade_Federacao_A", TILED: true }
 });
 
-<Meta title="Examples/Map/Working with WMS sources" />
+<Meta title="Examples/Toolbar/Buttons!" />
 
-# Working with WMS sources
+# Buttons!
 
-Here we will add a `TileWMS` source to the map from the previous example:
+In this example, we will add toggle button to our map, allowing for conditional rendering of layers:
 
 ```tsx
 import { Map } from "ol-kit";
 import "ol-kit/dist/index.css";
 
 // Import required OpenLayers types
-import { XYZ as XYZSource, TileWMS as TileWMSSource } from "ol/source";
+import { XYZ as XYZSource } from "ol/source";
 
 // Viewport options, according to https://openlayers.org/en/latest/apidoc/module-ol_View.html#~ViewOptions
 const options = {
@@ -57,20 +58,52 @@ const WMSSource = new TileWMSSource({
 
 // Defining the map:
 function App() {
+  // A hook to store button state
+  const [buttonState, setButtonState] = useState(true);
+
   return (
     <Map height={"300px"} width={"100%"}>
-      <Map.View options={options}></Map.View>
+      <Map.View options={options} />
       <Map.Layer.Tile source={esriWorldImagerySource} />
-      <Map.Layer.Tile source={WMSSource} />
+      {buttonState ? <Map.Layer.Tile source={WMSSource} /> : null}
+      <Map.Toolbar>
+        <Map.Toolbar.Button
+          active={buttonState}
+          onClick={() => setButtonState(!buttonState)}
+          tooltip={"I'm a toggle button!"}
+          icon={"🗺️"}
+        ></Map.Toolbar.Button>
+      </Map.Toolbar>
     </Map>
   );
 }
 ```
 
+> ## Tip
+>
+> You can use this same button component for normal buttons (i.e. without toggle behaviour) just by removig the `active` attribute.
+
+export const Content = () => {
+  const [buttonState, setButtonState] = useState(true);
+  return (
+    <Map height={"300px"} width={"100%"}>
+      <Map.View options={options} />
+      <Map.Layer.Tile source={esriWorldImagerySource} />
+      {buttonState ? <Map.Layer.Tile source={WMSSource} /> : null}
+      <Map.Toolbar>
+        <Map.Toolbar.Button
+          active={buttonState}
+          onClick={() => setButtonState(!buttonState)}
+          tooltip={"I'm a toggle button!"}
+          icon={"🗺️"}
+        ></Map.Toolbar.Button>
+      </Map.Toolbar>
+    </Map>
+  );
+};
+
+Click in the `🗺️` button and see the _magic_ happens!
+
 <Story name="Adding a basemap layer">
-  <Map height={"300px"} width={"100%"}>
-    <Map.View options={options} />
-    <Map.Layer.Tile source={esriWorldImagerySource} />
-    <Map.Layer.Tile source={WMSSource} />
-  </Map>
+  <Content />
 </Story>

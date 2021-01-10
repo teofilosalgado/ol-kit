@@ -1,6 +1,7 @@
 import { Meta, Story, Props, Canvas } from "@storybook/addon-docs/blocks";
-import { Map } from "../../../index";
 import { XYZ as XYZSource } from "ol/source";
+import { Map } from "../../../../dist/index";
+import "../../../../dist/index.css";
 
 export const options = {
   projection: "EPSG:4326",
@@ -15,7 +16,7 @@ export const esriWorldImagerySource = new XYZSource({
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
 });
 
-<Meta title="Examples/Map/Adding a basemap layer" component={Map} />
+<Meta title="Examples/Map/Adding a basemap layer" />
 
 # Adding a basemap layer
 
@@ -47,8 +48,8 @@ const esriWorldImagerySource = new XYZSource({
 function App() {
   return (
     <Map height={"300px"} width={"100%"}>
-      <Map.View options={options}></Map.View>
-      <Map.Layer.Tile source={esriWorldImagerySource}></Map.Layer.Tile>
+      <Map.View options={options} />
+      <Map.Layer.Tile source={esriWorldImagerySource} />
     </Map>
   );
 }
@@ -56,7 +57,7 @@ function App() {
 
 > ## Tip
 >
-> You can create a constant file with all your sources and option to optimize your React components rendering. They don't need to be inside React's lifecycle anyway.
+> You can create a constant file with all your sources and options to optimize your React components rendering. They don't need to be inside React's lifecycle anyway. It will also improve your overrall performance.
 
 <Story name="Adding a basemap layer">
   <Map height={"300px"} width={"100%"}>
