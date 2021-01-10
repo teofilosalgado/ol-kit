@@ -21,6 +21,7 @@
   "scripts": {
     "storybook:build": "build-storybook --docs",
     "gh-pages:deploy": "gh-pages -d storybook-static",
+    "start": "start-storybook -p 6006 --docs",
     "build": "microbundle-crl --css-modules true --no-compress --format modern,cjs",
     "prepare": "run-s build",
     "postpublish": "run-s storybook:build gh-pages:deploy",
@@ -28,8 +29,7 @@
     "test:build": "run-s build",
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
-    "storybook": "start-storybook -p 6006 --docs"
+    "test:watch": "react-scripts test --env=jsdom"
   },
   "peerDependencies": {
     "ol": ">=6.0.0",
