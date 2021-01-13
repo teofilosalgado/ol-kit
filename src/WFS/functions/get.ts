@@ -8,13 +8,15 @@ export default async function getFeatures(
   url: string,
   namespace: string,
   types: string[],
-  filter: Filter
+  filter: Filter,
+  srsName?: string
 ): Promise<Feature<Geometry>[]> {
   const getRequest = new WFS().writeGetFeature({
     featureNS: namespace,
     featurePrefix: namespace,
     featureTypes: types,
-    filter
+    filter,
+    srsName
   });
   const payload = new XMLSerializer().serializeToString(getRequest);
   const response = await fetch(url, {
