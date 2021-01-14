@@ -10,9 +10,10 @@ type Props = {
   source: VectorSource<Geometry>;
   style: StyleLike;
   fit?: boolean;
+  name?: String;
 };
 
-function Vector({ source, style, fit }: Props) {
+function Vector({ source, style, fit, name }: Props) {
   const mapContext = useContext(MapContext);
   const layer = useRef(
     new VectorLayer({
@@ -22,6 +23,7 @@ function Vector({ source, style, fit }: Props) {
   );
 
   useEffect(() => {
+    layer.current.set("name", name);
     mapContext.map?.current.addLayer(layer.current);
 
     return function cleanup() {

@@ -6,9 +6,10 @@ import { MapContext } from "../../../Context";
 
 type Props = {
   source: TileSource;
+  name?: String;
 };
 
-function Tile({ source }: Props) {
+function Tile({ source, name }: Props) {
   const mapContext = useContext(MapContext);
   const layer = useRef(
     new TileLayer({
@@ -17,6 +18,7 @@ function Tile({ source }: Props) {
   );
 
   useEffect(() => {
+    layer.current.set("name", name);
     mapContext.map?.current.addLayer(layer.current);
     return function cleanup() {
       mapContext.map?.current.removeLayer(layer.current);

@@ -3,14 +3,16 @@ import { Select as SelectInteraction } from "ol/interaction";
 import { SelectEvent } from "ol/interaction/Select";
 
 import { MapContext } from "../../../Context";
+import { FilterFunction } from "ol/interaction/Translate";
 
 type Props = {
   onSelected?: (event: SelectEvent) => void;
+  filter?: FilterFunction;
 };
 
-function Select({ onSelected }: Props) {
+function Select({ onSelected, filter }: Props) {
   const mapContext = useContext(MapContext);
-  const interaction = useRef(new SelectInteraction({}));
+  const interaction = useRef(new SelectInteraction({ filter }));
 
   useEffect(() => {
     if (onSelected) {

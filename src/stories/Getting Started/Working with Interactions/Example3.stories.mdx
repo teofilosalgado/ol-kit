@@ -117,17 +117,24 @@ function App() {
     setCurrentClickedCircle(event.selected[0].get("name"));
   };
 
+  // A simple filter function to illustrate how filters work
+  const filter = (feature, layer) => {
+    console.log(feature, layer.get("name"));
+    return true;
+  };
+
   return (
     <>
       <Map height={"300px"} width={"100%"}>
         <Map.View options={options} />
         <Map.Layer.Tile source={esriWorldImagerySource} />
-        <Map.Layer.Vector source={vectorSource} style={circleStyle} />
+        <Map.Layer.Vector
+          source={vectorSource}
+          style={circleStyle}
+          name={"Circles"}
+        />
         {buttonState ? (
-          <Map.Interaction.Select
-            source={vectorSource}
-            onSelected={onSelected}
-          />
+          <Map.Interaction.Select filter={filter} onSelected={onSelected} />
         ) : null}
         <Map.Toolbar>
           <Map.Toolbar.Button
@@ -154,17 +161,22 @@ export const Content = () => {
   const onSelected = (event) => {
     setCurrentClickedCircle(event.selected[0].get("name"));
   };
+  const filter = (feature, layer) => {
+    console.log(feature, layer.get("name"));
+    return true;
+  };
   return (
     <>
       <Map height={"300px"} width={"100%"}>
         <Map.View options={options} />
         <Map.Layer.Tile source={esriWorldImagerySource} />
-        <Map.Layer.Vector source={vectorSource} style={circleStyle} />
+        <Map.Layer.Vector
+          source={vectorSource}
+          style={circleStyle}
+          name={"Circles"}
+        />
         {buttonState ? (
-          <Map.Interaction.Select
-            source={vectorSource}
-            onSelected={onSelected}
-          />
+          <Map.Interaction.Select filter={filter} onSelected={onSelected} />
         ) : null}
         <Map.Toolbar>
           <Map.Toolbar.Button
