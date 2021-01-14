@@ -78,23 +78,21 @@ export const Content = () => {
     setPosition(event.coordinate);
   };
   return (
-    <>
-      <Map height={"300px"} width={"100%"} onSingleClick={onSingleClick}>
-        <Map.Overlay position={position}>
-          <Map.Overlay.Popup onClick={() => setPosition(undefined)}>
-            <strong>Hello, I am an overlay!</strong>
-            <div>longitude {position[0]}</div>
-            <div>latitude {position[1]}</div>
-          </Map.Overlay.Popup>
-        </Map.Overlay>
-        <Map.View options={options} />
-        <Map.Layer.Tile source={esriWorldImagerySource} />
-      </Map>
-    </>
+    <Map height={"300px"} width={"100%"} onSingleClick={onSingleClick}>
+      <Map.Overlay position={position}>
+        <Map.Overlay.Popup onClick={() => setPosition(undefined)}>
+          <strong>Hello, I am an overlay!</strong>
+          <div>longitude {position[0]}</div>
+          <div>latitude {position[1]}</div>
+        </Map.Overlay.Popup>
+      </Map.Overlay>
+      <Map.View options={options} />
+      <Map.Layer.Tile source={esriWorldImagerySource} />
+    </Map>
   );
 };
 
-Click in the `👆` to select between features!
+Click in the map to move the `Popup`!
 
 <Story name="Adding a basemap layer">
   <Content />
