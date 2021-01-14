@@ -49,41 +49,62 @@ const esriWorldImagerySource = new XYZSource({
 function App() {
   // Hook to store our current position
   const [position, setPosition] = useState([-43.990062, -19.873536]);
+  // Hook to store visibility of popup
+  const [visible, setVisible] = useState(true);
 
   // Callback used whenever the user clicks on the map
   const onSingleClick = (event) => {
+    setVisible(true);
     setPosition(event.coordinate);
   };
+
+  const onCloseClick = () => {
+    setVisible(false);
+    setPosition(undefined);
+  };
+
   return (
-    <>
-      <Map height={"300px"} width={"100%"} onSingleClick={onSingleClick}>
-        <Map.Overlay position={position}>
-          <Map.Overlay.Popup onClick={() => setPosition(undefined)}>
-            <strong>Hello, I am an overlay!</strong>
-            <div>longitude {position[0]}</div>
-            <div>latitude {position[1]}</div>
-          </Map.Overlay.Popup>
-        </Map.Overlay>
-        <Map.View options={options} />
-        <Map.Layer.Tile source={esriWorldImagerySource} />
-      </Map>
-    </>
+    <Map height={"300px"} width={"100%"} onSingleClick={onSingleClick}>
+      <Map.Overlay position={position}>
+        <Map.Overlay.Popup onCloseClick={onCloseClick} visible={visible}>
+          {position ? (
+            <>
+              <strong>Hello, I am an overlay!</strong>
+              <div>longitude {position[0]}</div>
+              <div>latitude {position[1]}</div>
+            </>
+          ) : null}
+        </Map.Overlay.Popup>
+      </Map.Overlay>
+      <Map.View options={options} />
+      <Map.Layer.Tile source={esriWorldImagerySource} />
+    </Map>
   );
 }
 ```
 
 export const Content = () => {
   const [position, setPosition] = useState([-43.990062, -19.873536]);
+  const [visible, setVisible] = useState(true);
   const onSingleClick = (event) => {
+    setVisible(true);
     setPosition(event.coordinate);
+  };
+  const onCloseClick = () => {
+    setVisible(false);
+    setPosition(undefined);
   };
   return (
     <Map height={"300px"} width={"100%"} onSingleClick={onSingleClick}>
       <Map.Overlay position={position}>
-        <Map.Overlay.Popup onClick={() => setPosition(undefined)}>
-          <strong>Hello, I am an overlay!</strong>
-          <div>longitude {position[0]}</div>
-          <div>latitude {position[1]}</div>
+        <Map.Overlay.Popup onCloseClick={onCloseClick} visible={visible}>
+          {position ? (
+            <>
+              <strong>Hello, I am an overlay!</strong>
+              <div>longitude {position[0]}</div>
+              <div>latitude {position[1]}</div>
+            </>
+          ) : null}
         </Map.Overlay.Popup>
       </Map.Overlay>
       <Map.View options={options} />

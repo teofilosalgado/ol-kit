@@ -3,18 +3,19 @@ import style from "./index.module.css";
 
 type Props = {
   children: ReactNode;
-  onClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  onCloseClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  visible: boolean;
 };
 
-function Popup({ children, onClick }: Props) {
-  return (
+function Popup({ children, onCloseClick, visible }: Props) {
+  return visible ? (
     <div id="popup" className={style.popup}>
-      <a onClick={onClick} className={style.popupCloser}>
+      <a onClick={onCloseClick} className={style.popupCloser}>
         ✖
       </a>
       <div>{children}</div>
     </div>
-  );
+  ) : null;
 }
 
 export default Popup;
