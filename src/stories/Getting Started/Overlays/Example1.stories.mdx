@@ -1,0 +1,101 @@
+import { Meta, Story, Props, Canvas } from "@storybook/addon-docs/blocks";
+import { useState, useRef, useEffect } from "react";
+import { XYZ as XYZSource } from "ol/source";
+import { Map } from "../../../../dist/index";
+import "../../../../dist/index.css";
+
+export const options = {
+  projection: "EPSG:4326",
+  center: [-43.990062, -19.873536],
+  zoom: 6,
+  minZoom: 5,
+  maxZoom: 16
+};
+
+export const esriWorldImagerySource = new XYZSource({
+  url:
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+});
+
+<Meta title="Getting Started/Showing Overlays/Creating a popup" />
+
+# Selecting features
+
+In this example, we will add an `Overlay` and a `Popup` to our map:
+
+```tsx
+import { Map } from "ol-kit";
+import "ol-kit/dist/index.css";
+
+// Import required OpenLayers types
+import { XYZ as XYZSource } from "ol/source";
+
+// Viewport options, according to https://openlayers.org/en/latest/apidoc/module-ol_View.html#~ViewOptions
+const options = {
+  projection: "EPSG:4326",
+  center: [-43.990062, -19.873536],
+  zoom: 6,
+  minZoom: 5,
+  maxZoom: 16
+};
+
+// Let's create a source for our basemap, in this case, Esri's World Imagery
+const esriWorldImagerySource = new XYZSource({
+  url:
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+});
+
+// Defining the map:
+function App() {
+  // Hook to store our current position
+  const [position, setPosition] = useState([-43.990062, -19.873536]);
+
+  // Callback used whenever the user clicks on the map
+  const onSingleClick = (event) => {
+    setPosition(event.coordinate);
+  };
+  return (
+    <>
+      <Map height={"300px"} width={"100%"} onSingleClick={onSingleClick}>
+        <Map.Overlay position={position}>
+          <Map.Overlay.Popup onClick={() => setPosition(undefined)}>
+            <strong>Hello, I am an overlay!</strong>
+            <div>longitude {position[0]}</div>
+            <div>latitude {position[1]}</div>
+          </Map.Overlay.Popup>
+        </Map.Overlay>
+        <Map.View options={options} />
+        <Map.Layer.Tile source={esriWorldImagerySource} />
+      </Map>
+    </>
+  );
+}
+```
+
+export const Content = () => {
+  const [position, setPosition] = useState([-43.990062, -19.873536]);
+  const onSingleClick = (event) => {
+    setPosition(event.coordinate);
+  };
+  return (
+    <>
+      <Map height={"300px"} width={"100%"} onSingleClick={onSingleClick}>
+        <Map.Overlay position={position}>
+          <Map.Overlay.Popup onClick={() => setPosition(undefined)}>
+            <strong>Hello, I am an overlay!</strong>
+            <div>longitude {position[0]}</div>
+            <div>latitude {position[1]}</div>
+          </Map.Overlay.Popup>
+        </Map.Overlay>
+        <Map.View options={options} />
+        <Map.Layer.Tile source={esriWorldImagerySource} />
+      </Map>
+    </>
+  );
+};
+
+Click in the `👆` to select between features!
+
+<Story name="Adding a basemap layer">
+  <Content />
+</Story>

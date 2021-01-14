@@ -7,7 +7,12 @@ export const parameters = {
       order: [
         "Home",
         "Getting Started",
-        ["Creating a Map", "Adding a Toolbar", "Working with Interactions"]
+        [
+          "Creating a Map",
+          "Adding a Toolbar",
+          "Showing Overlays",
+          "Working with Interactions"
+        ]
       ]
     }
   },
