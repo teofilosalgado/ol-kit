@@ -24,16 +24,16 @@ jobs:
         ref: ${{ github.event.release.target_commitish }}
         
     # clean install of your projects' deps. We use "npm ci" to avoid package lock changes
-    - run: npm ci
+    - run: yarn
     # set up git since we will later push to the repo
     - run: git config --global user.name "João Victor Teófilo Salgado - Github Actions"
     - run: git config --global user.email "jvictorteo2000@hotmail.com"
     # upgrade npm version in package.json to the tag used in the release.
-    - run: npm version ${{ github.event.release.tag_name }}
+    - run: yarn version ${{ github.event.release.tag_name }}
     # build the project
-    - run: npm run build
+    - run: yarn run build
     # publish to NPM
-    - run: npm publish --access public
+    - run: yarn publish --access public
       env:
         # Use a token to publish to NPM. See below for how to set it up
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
