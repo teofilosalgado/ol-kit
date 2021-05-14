@@ -65,7 +65,7 @@ function App() {
 
   return (
     <Map height={"300px"} width={"100%"} onSingleClick={onSingleClick}>
-      <Map.Overlay position={position}>
+      <Map.Overlay position={position} stopEvent={true}>
         <Map.Overlay.Popup onCloseClick={onCloseClick} visible={visible}>
           {position ? (
             <>
@@ -96,7 +96,7 @@ export const Content = () => {
   };
   return (
     <Map height={"300px"} width={"100%"} onSingleClick={onSingleClick}>
-      <Map.Overlay position={position}>
+      <Map.Overlay position={position} stopEvent={true}>
         <Map.Overlay.Popup onCloseClick={onCloseClick} visible={visible}>
           {position ? (
             <>
