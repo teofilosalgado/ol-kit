@@ -8,15 +8,17 @@ import Popup from "./Popup";
 type Props = {
   children: ReactNode;
   position: Coordinate;
+  stopEvent: boolean;
+
 };
 
-function Overlay({ position, children }: Props) {
+function Overlay({ position, children, stopEvent=flase }: Props) {
   const mapContext = useContext(MapContext);
   const elementRef = useRef(null);
   const overlayRef = useRef(
     new OpenLayersOverlay({
       positioning: OverlayPositioning.CENTER_CENTER,
-      stopEvent: false,
+      stopEvent: stopEvent,
       autoPan: true,
       autoPanAnimation: {
         duration: 500
