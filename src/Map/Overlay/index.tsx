@@ -12,7 +12,7 @@ type Props = {
 
 };
 
-function Overlay({ position, children, stopEvent=flase }: Props) {
+function Overlay({ position, children, stopEvent=false }: Props) {
   const mapContext = useContext(MapContext);
   const elementRef = useRef(null);
   const overlayRef = useRef(
