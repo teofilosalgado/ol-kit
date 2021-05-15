@@ -1,4 +1,4 @@
-name: NPM Publish
+name: Publish NPM Package and GitHub Pages
 
 on:
   release:
@@ -12,12 +12,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/setup-node@v2
+    - name: Setup Node.js 14
+      uses: actions/setup-node@v2
       with:
         node-version: '14'
         registry-url: https://registry.npmjs.org/
-    
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
       with:
         # "ref" specifies the branch to check out.
         # "github.event.release.target_commitish" is a global variable and specifies the branch the release targeted
@@ -42,3 +43,10 @@ jobs:
       env:
         # The secret is passed automatically. Nothing to configure.
         github-token: ${{ secrets.GITHUB_TOKEN }}
+    # Build storybook static assets
+    - run: run-s storybook:build
+    - name: Deploy to Github Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./storybook-static
