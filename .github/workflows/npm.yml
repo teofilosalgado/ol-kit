@@ -44,7 +44,7 @@ jobs:
         # The secret is passed automatically. Nothing to configure.
         github-token: ${{ secrets.GITHUB_TOKEN }}
     # Build storybook static assets
-    - run: build-storybook --docs
+    - run: yarn build-storybook --docs
     - name: Deploy to Github Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
